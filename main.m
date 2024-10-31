@@ -1,11 +1,6 @@
 clear all
 clc
 %% 
-% Adaptive bipartite consensus+Fixed-time+Prescribed Performance+Stochastic
-% System
-% 2022-06-10
-%% 时间参数
-% 仿真时间
 T_f = 20;
 % 步长
 dt = 0.01;
@@ -141,87 +136,3 @@ for i = 1:steps-1
     rnd_2 = rand(N,1);
     x_2(:,i+1) = x_2(:,i) + (u(:,i)+(-3.5.*x_2(:,i)+x_1(:,i).*x_2(:,i).^2))*dt+0.1*x_1(:,i).*sin(2*x_1(:,i).*x_2(:,i)).*sqrt(dt).*rnd_2*0.02;
 end
-
-
-figure(1)
-plot(t(1:end-1),x_1(1,:));
-hold on
-plot(t(1:end-1),x_1(2,:),'linewidth',1);
-plot(t(1:end-1),x_1(3,:),'linewidth',1);
-plot(t(1:end-1),x_1(4,:),'linewidth',1);
-plot(t(1:end-1),x_1(5,:),'linewidth',1);
-plot(t(1:end-1),y_l,'r--');
-axis([0,20,-1.5,1.5]);
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% ylabel('$\theta$','interpreter','latex');
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$x_{1,1}$','$x_{2,1}$','$x_{3,1}$','$x_{4,1}$','$x_{5,1}$','$y_l$','interpreter','latex')
-hold off
-
-figure(2)
-plot(t(1:end-1),x_2(1,:),'r');
-hold on
-plot(t(1:end-1),x_2(2,:),'b','linewidth',1);
-plot(t(1:end-1),x_2(3,:),'k','linewidth',1);
-plot(t(1:end-1),x_2(4,:),'y','linewidth',1);
-plot(t(1:end-1),x_2(5,:),'g','linewidth',1);
-axis([0,20,-8,4]);
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% ylabel('$\theta$','interpreter','latex');
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$x_{1,2}$','$x_{2,2}$','$x_{3,2}$','$x_{4,2}$','$x_{5,2}$','interpreter','latex')
-hold off
-% 
-figure(3)
-plot(t(1:end-1),u(1,:));
-hold on
-plot(t(1:end-1),u(2,:));
-plot(t(1:end-1),u(3,:));
-plot(t(1:end-1),u(4,:));
-plot(t(1:end-1),u(5,:));
-% axis([0,20,-20,60]);
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$u_{1}$','$u_{2}$','$u_{3}$','$u_{4}$','$u_{5}$','interpreter','latex')
-hold off
-
-figure(4)
-plot(t(1:end-1),e)
-hold on
-t = 0:0.01:20;
-for ii = 1:length(t)
-    rho_t(ii) = scaling_function(t(ii),T_s,sigma);
-end
-plot(t,1./rho_t,'b--',t,-1./rho_t,'r--');
-axis([0,20,-0.5,0.5]);
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$e_{1}$','$e_{2}$','$e_{3}$','$e_{4}$','$e_{5}$','$\frac{1}{\rho(t)}$','$\frac{-1}{\rho(t)}$','interpreter','latex')
-hold off
-
-figure(5)
-plot(t(1:end-1),vartheta);
-% axis([0,20,-100,100]);
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$\hat{\vartheta}_{1}$','$\hat{\vartheta}_{2}$','$\hat{\vartheta}_{3}$','$\hat{\vartheta}_{4}$','$\hat{\vartheta}_{5}$','interpreter','latex')
-hold off
-
-figure(6)
-plot(t(1:end-1),norm_bipartite_error);
-hold on
-% plot(t,max(svd(L1))*sqrt(N)./rho_t,t,-max(svd(L1))*sqrt(N)./rho_t);
-% plot(t(1:end-1),norm_bipartite_error2,'o');
-%set(gcf,'unit','centimeters','Position',[20,24,8,4]);
-xlabel('Time(s)')
-% legend('$x_{1,2}$,$x_{2,2}$,$x_{3,2}$,$x_{4,2}$,$x_{5,2}$','interpreter','latex')
-legend('$\Vert z\Vert$','interpreter','latex')
-hold off
-
-% figure(7)
-% plot(t(1:end-1),bipartite_error)
